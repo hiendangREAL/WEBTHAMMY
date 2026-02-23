@@ -108,13 +108,13 @@ export function ProductCard({ product }: ProductCardProps) {
               </span>
             )}
           </div>
-
-          <Button size="sm" variant="outline" asChild>
-            <Link href={`/san-pham/${product.slug}`}>
-              Xem
-            </Link>
-          </Button>
         </div>
+
+        <Button size="sm" className="mt-3 w-full bg-accent hover:bg-accent-dark" asChild>
+          <a href="tel:0329555534">
+            Lien he mua hang
+          </a>
+        </Button>
       </CardContent>
     </Card>
   )

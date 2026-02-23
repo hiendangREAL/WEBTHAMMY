@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import {
@@ -16,6 +16,7 @@ import {
   ChevronDown,
   LogOut,
   User,
+  Loader2,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
@@ -28,6 +29,17 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { cn } from '@/lib/utils'
+import { logout } from '@/lib/auth/actions'
+import { createClient } from '@/lib/supabase/client'
+import type { AuthUser } from '@/lib/auth'
+
+interface UserProfile {
+  id: string
+  email: string
+  full_name: string | null
+  role: string
+  avatar_url: string | null
+}
 
 const sidebarLinks = [
   { href: '/admin', label: 'Tong quan', icon: Home },
@@ -45,22 +57,89 @@ export default function AdminLayout({
 }) {
   const pathname = usePathname()
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
+  const [user, setUser] = useState<AuthUser | null>(null)
+  const [isLoading, setIsLoading] = useState(true)
 
-  // TODO: Replace with actual auth check
-  const isLoggedIn = true
-  const user = {
-    name: 'Admin',
-    email: 'admin@thammy.vn',
-    avatar: null,
+  useEffect(() => {
+    // Get current user on mount
+    const fetchUser = async () => {
+      const supabase = createClient()
+
+      const { data: { user: authUser } } = await supabase.auth.getUser()
+
+      if (authUser) {
+        // Get user profile
+        const { data: profile } = await supabase
+          .from('users')
+          .select('id, email, full_name, role, avatar_url')
+          .eq('id', authUser.id)
+          .maybeSingle<UserProfile>()
+
+        if (profile) {
+          setUser({
+            id: profile.id,
+            email: profile.email,
+            fullName: profile.full_name,
+            role: profile.role,
+            avatarUrl: profile.avatar_url,
+          })
+        } else {
+          // Fallback to auth metadata
+          setUser({
+            id: authUser.id,
+            email: authUser.email ?? '',
+            fullName: (authUser.user_metadata?.full_name as string | null) ?? null,
+            role: (authUser.user_metadata?.role as string) ?? 'viewer',
+            avatarUrl: (authUser.user_metadata?.avatar_url as string | null) ?? null,
+          })
+        }
+      }
+
+      setIsLoading(false)
+    }
+
+    fetchUser()
+
+    // Listen for auth changes
+    const supabase = createClient()
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (_event, session) => {
+        if (!session) {
+          setUser(null)
+        }
+      }
+    )
+
+    return () => {
+      subscription.unsubscribe()
+    }
+  }, [])
+
+  const handleLogout = async () => {
+    await logout()
   }
 
-  if (!isLoggedIn) {
+  // Show loading state
+  if (isLoading) {
     return (
       <div className="flex min-h-screen items-center justify-center">
-        <p>Ban can dang nhap de truy cap trang nay.</p>
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
       </div>
     )
   }
+
+  // If not logged in, middleware should handle redirect
+  // This is just a fallback
+  if (!user) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <p>Dang chuyen huong...</p>
+      </div>
+    )
+  }
+
+  const displayName = user.fullName ?? user.email.split('@')[0]
+  const initial = displayName.charAt(0).toUpperCase()
 
   return (
     <div className="min-h-screen bg-secondary/20">
@@ -149,19 +228,24 @@ export default function AdminLayout({
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className="flex items-center gap-2">
                   <Avatar className="h-8 w-8">
-                    <AvatarImage src={user.avatar ?? undefined} />
+                    <AvatarImage src={user.avatarUrl ?? undefined} />
                     <AvatarFallback className="bg-primary text-primary-foreground text-xs">
-                      {user.name.charAt(0)}
+                      {initial}
                     </AvatarFallback>
                   </Avatar>
                   <span className="hidden text-sm font-medium md:inline-block">
-                    {user.name}
+                    {displayName}
                   </span>
                   <ChevronDown className="h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-48">
-                <DropdownMenuLabel>Tai khoan</DropdownMenuLabel>
+                <DropdownMenuLabel>
+                  <div>{displayName}</div>
+                  <div className="text-xs font-normal text-muted-foreground">
+                    {user.email}
+                  </div>
+                </DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>
                   <User className="mr-2 h-4 w-4" />
@@ -172,7 +256,10 @@ export default function AdminLayout({
                   Cai dat
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem className="text-destructive">
+                <DropdownMenuItem
+                  className="text-destructive focus:text-destructive cursor-pointer"
+                  onClick={handleLogout}
+                >
                   <LogOut className="mr-2 h-4 w-4" />
                   Dang xuat
                 </DropdownMenuItem>

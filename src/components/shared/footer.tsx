@@ -1,30 +1,22 @@
 import Link from 'next/link'
-import { Facebook, Instagram, Mail, MapPin, Phone } from 'lucide-react'
+import { Facebook, Instagram, Mail, MapPin, Phone, MessageCircle } from 'lucide-react'
 
 const footerLinks = {
-  services: {
-    title: 'Dịch vụ',
-    links: [
-      { href: '/dich-vu/cham-soc-da', label: 'Chăm sóc da' },
-      { href: '/dich-vu/tri-nam', label: 'Trị nám' },
-      { href: '/dich-vu/tai-tao-da', label: 'Tái tạo da' },
-      { href: '/dich-vu/giam-mo', label: 'Giảm mỡ' },
-    ],
-  },
   products: {
-    title: 'Sản phẩm',
+    title: 'San pham',
     links: [
-      { href: '/san-pham?cat=may-tham-my', label: 'Máy thẩm mỹ' },
-      { href: '/san-pham?cat=my-pham', label: 'Mỹ phẩm' },
-      { href: '/san-pham?cat=phu-kien', label: 'Phụ kiện' },
+      { href: '/san-pham?cat=may-tham-my', label: 'May tham my' },
+      { href: '/san-pham?cat=my-pham', label: 'My pham' },
+      { href: '/san-pham?cat=phu-kien', label: 'Phu kien' },
+      { href: '/san-pham', label: 'Xem tat ca' },
     ],
   },
   company: {
-    title: 'Công ty',
+    title: 'Cong ty',
     links: [
-      { href: '/ve-chung-toi', label: 'Về chúng tôi' },
-      { href: '/lien-he', label: 'Liên hệ' },
-      { href: '/tuyen-dung', label: 'Tuyển dụng' },
+      { href: '/ve-chung-toi', label: 'Ve chung toi' },
+      { href: '/lien-he', label: 'Lien he' },
+      { href: '/bao-hanh', label: 'Bao hanh' },
     ],
   },
 }
@@ -34,9 +26,6 @@ const socialLinks = [
   { href: 'https://zalo.me', icon: MessageCircle, label: 'Zalo' },
   { href: 'https://instagram.com', icon: Instagram, label: 'Instagram' },
 ]
-
-// Import MessageCircle separately
-import { MessageCircle } from 'lucide-react'
 
 export function Footer() {
   return (
@@ -51,8 +40,8 @@ export function Footer() {
               </span>
             </Link>
             <p className="mt-4 max-w-sm text-sm text-muted-foreground">
-              Chuyên cung cấp dịch vụ thẩm mỹ cao cấp và thiết bị chuyên nghiệp.
-              Uy tín - Chất lượng - Hiệu quả.
+              Chuyen cung cap thiet bi tham my, may tham my, my pham chinh hang.
+              Bao hanh uy tin - Giao hang toan quoc.
             </p>
 
             {/* Contact Info */}

@@ -7,10 +7,9 @@ import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 
 const navLinks = [
-  { href: '/dich-vu', label: 'Dịch vụ' },
-  { href: '/san-pham', label: 'Sản phẩm' },
-  { href: '/ve-chung-toi', label: 'Về chúng tôi' },
-  { href: '/lien-he', label: 'Liên hệ' },
+  { href: '/san-pham', label: 'San pham' },
+  { href: '/ve-chung-toi', label: 'Ve chung toi' },
+  { href: '/lien-he', label: 'Lien he' },
 ]
 
 export function Header() {
@@ -48,8 +47,8 @@ export function Header() {
             <Phone className="h-4 w-4" />
             <span>0329.555.534</span>
           </a>
-          <Button className="bg-accent hover:bg-accent-dark">
-            Đặt lịch hẹn
+          <Button asChild className="bg-accent hover:bg-accent-dark">
+            <a href="tel:0329555534">Lien he mua hang</a>
           </Button>
         </div>
 
@@ -93,8 +92,8 @@ export function Header() {
               <Phone className="h-4 w-4" />
               <span>0329.555.534</span>
             </a>
-            <Button className="w-full bg-accent hover:bg-accent-dark">
-              Đặt lịch hẹn
+            <Button asChild className="w-full bg-accent hover:bg-accent-dark">
+              <a href="tel:0329555534">Lien he mua hang</a>
             </Button>
           </div>
         </nav>

@@ -5,8 +5,6 @@ import { usePathname } from 'next/navigation'
 import {
   Home,
   Package,
-  Briefcase,
-  Calendar,
   Users,
   Settings,
   UserCog,
@@ -18,8 +16,6 @@ import { Button } from '@/components/ui/button'
 const sidebarLinks = [
   { href: '/admin', label: 'Tong quan', icon: Home },
   { href: '/admin/san-pham', label: 'San pham', icon: Package },
-  { href: '/admin/dich-vu', label: 'Dich vu', icon: Briefcase },
-  { href: '/admin/dat-lich', label: 'Dat lich', icon: Calendar },
   { href: '/admin/khach-hang', label: 'Khach hang', icon: Users },
   { href: '/admin/nguoi-dung', label: 'Nguoi dung', icon: UserCog },
   { href: '/admin/cai-dat', label: 'Cai dat', icon: Settings },

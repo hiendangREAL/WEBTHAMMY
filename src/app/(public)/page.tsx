@@ -2,65 +2,34 @@ import { Metadata } from 'next'
 import Link from 'next/link'
 import {
   ArrowRight,
-  Star,
   Award,
-  Clock,
-  Heart,
   CheckCircle,
   ShieldCheck,
   Users,
+  Phone,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { HeroSection } from '@/components/shared/hero-section'
 import { ProductCard, ProductCardData } from '@/components/public/product-card'
 import { TestimonialsSection } from '@/components/public/testimonials-section'
-import { BeforeAfterGallery, BeforeAfterItem } from '@/components/public/before-after-gallery'
 import { LeadCaptureForm } from '@/components/public/lead-capture-form'
 
 export const metadata: Metadata = {
-  title: 'Tham My Studio - Dich vu tham my cao cap tai TP.HCM',
-  description: 'Tham My Studio chuyen cung cap dich vu tham my cao cap: Tri nam, tai tao da, giam mo, phun xam. 10+ nam kinh nghiem, 5000+ khach hang hen long. Tu van mien phi!',
-  keywords: ['tham my', 'tham my vien', 'tri nam', 'tai tao da', 'giam mo', 'phun xam', 'spa tp hcm', 'cham soc da'],
+  title: 'Tham My Studio - Thiet bi tham my chuyen nghiep',
+  description: 'Tham My Studio chuyen cung cap thiet bi tham my, may tham my, my pham chinh hang. Bao hanh chinh hang, giao hang toan quoc. Tu van mien phi!',
+  keywords: ['thiet bi tham my', 'may tham my', 'my pham', 'thiet bi spa', 'trang thiet bi tham my'],
   openGraph: {
-    title: 'Tham My Studio - Dich vu tham my cao cap',
-    description: '10+ nam kinh nghiem, 5000+ khach hang hen long. Dich vu tham my cao cap.',
+    title: 'Tham My Studio - Thiet bi tham my chuyen nghiep',
+    description: 'Thiet bi tham my chinh hang, bao hanh uy tin. Giao hang toan quoc.',
   },
 }
 
-const services = [
-  {
-    title: 'Cham soc da',
-    description: 'Dieu tri da chuyen nghiep voi cong nghe hien dai',
-    icon: Heart,
-    href: '/dich-vu/cham-soc-da-co-ban',
-  },
-  {
-    title: 'Tri nam',
-    description: 'Giai phap tri nam hieu qua, an toan',
-    icon: Star,
-    href: '/dich-vu/tri-nam-da',
-  },
-  {
-    title: 'Tai tao da',
-    description: 'Phuc hoi lai la da tuoi tre, sang khoi',
-    icon: Award,
-    href: '/dich-vu/tai-tao-da-prp',
-  },
-  {
-    title: 'Giam mo',
-    description: 'Giam mo cac vung nang cao, noi cot',
-    icon: Clock,
-    href: '/dich-vu/giam-mo-co-them',
-  },
-]
-
 const stats = [
+  { value: '500+', label: 'San pham' },
+  { value: '2000+', label: 'Khach hang' },
   { value: '10+', label: 'Nam kinh nghiem' },
-  { value: '5000+', label: 'Khach hang hen long' },
-  { value: '50+', label: 'Dich vu da cung cap' },
-  { value: '100%', label: 'Cam ket chat luong' },
+  { value: '100%', label: 'Chinh hang' },
 ]
 
 // Featured products placeholder
@@ -99,37 +68,37 @@ const featuredProducts: ProductCardData[] = [
     category: { name: 'My pham', slug: 'my-pham' },
     is_new: true,
   },
-]
-
-// Before/After gallery sample data
-const beforeAfterItems: BeforeAfterItem[] = [
-  {
-    id: '1',
-    title: 'Tri nam da',
-    description: 'Sau 5 buoi dieu tri',
-    before_image_url: null,
-    after_image_url: null,
-  },
-  {
-    id: '2',
-    title: 'Tai tao da PRP',
-    description: 'Sau 3 buoi dieu tri',
-    before_image_url: null,
-    after_image_url: null,
-  },
-  {
-    id: '3',
-    title: 'Giam mo bung',
-    description: 'Sau 7 buoi dieu tri',
-    before_image_url: null,
-    after_image_url: null,
-  },
   {
     id: '4',
-    title: 'Nang co da',
-    description: 'Sau 4 buoi dieu tri',
-    before_image_url: null,
-    after_image_url: null,
+    slug: 'may-giam-mo-cryolipolysis',
+    name: 'May giam mo Cryolipolysis',
+    short_description: 'Cong nghe lanh diet mo hien dai',
+    price: 250000000,
+    sale_price: 220000000,
+    image_url: null,
+    category: { name: 'May tham my', slug: 'may-tham-my' },
+    is_featured: true,
+  },
+  {
+    id: '5',
+    slug: 'may-pha-lieu-hifu',
+    name: 'May pha lieu HIFO cao cap',
+    short_description: 'Cong nghe sieu am tap trung, nang co da',
+    price: 180000000,
+    sale_price: null,
+    image_url: null,
+    category: { name: 'May tham my', slug: 'may-tham-my' },
+  },
+  {
+    id: '6',
+    slug: 'bo-my-pham-cham-soc-da',
+    name: 'Bo my pham cham soc da chuyen nghiep',
+    short_description: 'Day du buoc chong cham soc',
+    price: 2500000,
+    sale_price: 1990000,
+    image_url: null,
+    category: { name: 'My pham', slug: 'my-pham' },
+    is_new: true,
   },
 ]
 
@@ -146,11 +115,11 @@ export default function HomePage() {
     <>
       {/* Hero Section */}
       <HeroSection
-        subtitle="Chao mung den Tham My Studio"
-        title="Sac dep cua ban la su nghiep cua chung toi"
-        description="Chuyen cung cap dich vu cham soc da va tham my cao cap voi cong nghe hien dai, doi ngu chuyen gia tai nang."
-        primaryCta={{ label: 'Dat lich hen', href: '/lien-he' }}
-        secondaryCta={{ label: 'Xem dich vu', href: '/dich-vu' }}
+        subtitle="Chuyen cung cap thiet bi tham my"
+        title="Thiet bi tham my chinh hang - Gia tot nhat"
+        description="Cung cap may tham my, my pham, phu kien spa chinh hang voi gia sieu tot. Bao hanh uy tin, giao hang toan quoc."
+        primaryCta={{ label: 'Xem tat ca san pham', href: '/san-pham' }}
+        secondaryCta={{ label: 'Lien he tu van', href: '/lien-he' }}
       />
 
       {/* Trust Badges */}
@@ -181,60 +150,16 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Services Section */}
+      {/* Products Section - Main Content */}
       <section className="py-16 md:py-24">
         <div className="container mx-auto px-4 md:px-6">
           <div className="mb-12 text-center">
-            <Badge variant="outline" className="mb-2">Dich vu</Badge>
+            <Badge variant="outline" className="mb-2">San pham noi bat</Badge>
             <h2 className="font-heading text-2xl font-bold md:text-3xl">
-              Dich vu noi bat
+              Thiet bi & My pham cao cap
             </h2>
             <p className="mt-3 text-muted-foreground">
-              Kham pha cac dich vu tham my cao cap cua chung toi
-            </p>
-          </div>
-
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {services.map((service) => (
-              <Link key={service.title} href={service.href}>
-                <Card className="group h-full border-border transition-all hover:border-primary hover:shadow-lg">
-                  <CardContent className="p-6">
-                    <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
-                      <service.icon className="h-6 w-6" />
-                    </div>
-                    <h3 className="mb-2 font-heading text-lg font-semibold">
-                      {service.title}
-                    </h3>
-                    <p className="text-sm text-muted-foreground">
-                      {service.description}
-                    </p>
-                  </CardContent>
-                </Card>
-              </Link>
-            ))}
-          </div>
-
-          <div className="mt-10 text-center">
-            <Button asChild variant="outline" className="gap-2">
-              <Link href="/dich-vu">
-                Xem tat ca dich vu
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-            </Button>
-          </div>
-        </div>
-      </section>
-
-      {/* Products Highlight Section */}
-      <section className="bg-secondary/30 py-16 md:py-24">
-        <div className="container mx-auto px-4 md:px-6">
-          <div className="mb-12 text-center">
-            <Badge variant="outline" className="mb-2">San pham</Badge>
-            <h2 className="font-heading text-2xl font-bold md:text-3xl">
-              San pham noi bat
-            </h2>
-            <p className="mt-3 text-muted-foreground">
-              Cac san pham va thiet bi tham my chat luong cao
+              Cac san pham ban chay nhat, duoc tin dung nhieu nhat
             </p>
           </div>
 
@@ -245,7 +170,7 @@ export default function HomePage() {
           </div>
 
           <div className="mt-10 text-center">
-            <Button asChild className="bg-accent hover:bg-accent-dark gap-2">
+            <Button asChild className="bg-accent hover:bg-accent-dark gap-2" size="lg">
               <Link href="/san-pham">
                 Xem tat ca san pham
                 <ArrowRight className="h-4 w-4" />
@@ -255,82 +180,55 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Before/After Gallery Section */}
-      <BeforeAfterGallery
-        items={beforeAfterItems}
-        className="py-16 md:py-24"
-      />
-
-      {/* Testimonials Section - uses default testimonials */}
-      <TestimonialsSection />
-
-      {/* About Preview Section */}
-      <section className="py-16 md:py-24">
+      {/* Why Choose Us */}
+      <section className="bg-secondary/30 py-16 md:py-24">
         <div className="container mx-auto px-4 md:px-6">
-          <div className="grid gap-10 lg:grid-cols-2">
-            <div className="relative">
-              <div className="aspect-square overflow-hidden rounded-2xl bg-muted">
-                <div className="flex h-full items-center justify-center text-muted-foreground">
-                  <Users className="h-24 w-24" />
-                </div>
-              </div>
-              <div className="absolute -bottom-4 -right-4 rounded-xl bg-primary p-4 text-primary-foreground shadow-lg">
-                <p className="text-2xl font-bold">10+</p>
-                <p className="text-sm">Nam kinh nghiem</p>
-              </div>
-            </div>
+          <div className="mb-12 text-center">
+            <Badge variant="outline" className="mb-2">Uu diem</Badge>
+            <h2 className="font-heading text-2xl font-bold md:text-3xl">
+              Vi sao chon chung toi?
+            </h2>
+          </div>
 
-            <div className="flex flex-col justify-center">
-              <Badge variant="outline" className="mb-2 w-fit">Ve chung toi</Badge>
-              <h2 className="font-heading text-2xl font-bold md:text-3xl">
-                Kien tao sac dep - Tan tam cham soc
-              </h2>
-              <p className="mt-4 text-muted-foreground">
-                Hon 10 nam kinh nghiem trong nganh tham my, chung toi cam ket
-                mang den dich vu tot nhat cho khach hang voi doi ngu chuyen gia
-                tai nang va trang thiet bi hien dai.
-              </p>
-              <ul className="mt-6 space-y-3">
-                {[
-                  'Doi ngu chuyen gia tay nghe cao',
-                  'Trang thiet bi hien dai, chinh hang',
-                  'Cam ket ket qua, bao hanh tan tam',
-                  'Dich vu cham soc khach hang 24/7',
-                ].map((item, idx) => (
-                  <li key={idx} className="flex items-center gap-2 text-muted-foreground">
-                    <CheckCircle className="h-5 w-5 flex-shrink-0 text-primary" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-              <Button className="mt-8 w-fit gap-2" asChild>
-                <Link href="/ve-chung-toi">
-                  Tim hieu them
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
-              </Button>
-            </div>
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+            {[
+              { icon: ShieldCheck, title: 'Chinh hang 100%', desc: 'Cam ket hang chinh hang, co tem bao hanh' },
+              { icon: Award, title: 'Gia canh tranh', desc: 'Gia tot nhat thi truong, nhieu uu dai' },
+              { icon: Users, title: 'Tu van tan tam', desc: 'Doi ngu tu van vien chuyen nghiep' },
+              { icon: CheckCircle, title: 'Bao hanh uy tin', desc: 'Bao hanh chinh hang, ho tro 24/7' },
+            ].map((item) => (
+              <div key={item.title} className="text-center">
+                <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-primary/10">
+                  <item.icon className="h-7 w-7 text-primary" />
+                </div>
+                <h3 className="font-heading font-semibold">{item.title}</h3>
+                <p className="mt-2 text-sm text-muted-foreground">{item.desc}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Lead Capture Section */}
+      {/* Testimonials Section */}
+      <TestimonialsSection />
+
+      {/* CTA Section */}
       <section className="py-16 md:py-24">
         <div className="container mx-auto px-4 md:px-6">
           <div className="grid gap-10 lg:grid-cols-2">
             {/* CTA Card */}
             <div className="flex flex-col justify-center rounded-2xl bg-primary p-8 text-primary-foreground md:p-12">
               <h2 className="font-heading text-2xl font-bold md:text-3xl">
-                San sang tro nen xinh dep hon?
+                Can tu van mua hang?
               </h2>
               <p className="mt-4 opacity-90">
-                Dat lich hen ngay de duoc tu van mien phi tu chuyen gia cua chung toi
+                Lien he ngay de duoc tu van mien phi va nhan bao gia tot nhat
               </p>
               <ul className="mt-6 space-y-3">
                 {[
                   'Tu van mien phi 24/7',
-                  'Chuyen gia tren 10 nam kinh nghiem',
-                  'Cam ket ket qua, hoan tien neu khong hai long',
+                  'Bao gia nhanh chong trong 5 phut',
+                  'Giao hang toan quoc, kiem tra truoc nhan',
                 ].map((item, idx) => (
                   <li key={idx} className="flex items-center gap-2 opacity-90">
                     <CheckCircle className="h-5 w-5 flex-shrink-0" />
@@ -344,7 +242,10 @@ export default function HomePage() {
                   className="bg-background text-primary hover:bg-background/90"
                   asChild
                 >
-                  <Link href="/lien-he">Dat lich tu van</Link>
+                  <a href="tel:0329555534">
+                    <Phone className="mr-2 h-4 w-4" />
+                    0329.555.534
+                  </a>
                 </Button>
                 <Button
                   size="lg"
@@ -352,16 +253,16 @@ export default function HomePage() {
                   className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10"
                   asChild
                 >
-                  <a href="tel:19001234">Goi 1900 1234</a>
+                  <Link href="/lien-he">Lien he tu van</Link>
                 </Button>
               </div>
             </div>
 
             {/* Lead Capture Form */}
             <LeadCaptureForm
-              title="Dang ky tu van mien phi"
-              description="De lai so dien thoai, chuyen gia se goi lai trong 5 phut"
-              showServiceSelect={true}
+              title="Dang ky nhan bao gia"
+              description="De lai thong tin, chung toi se lien he trong 5 phut"
+              showServiceSelect={false}
             />
           </div>
         </div>
