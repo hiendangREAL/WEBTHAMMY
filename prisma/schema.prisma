@@ -1,0 +1,244 @@
+// Prisma Schema for Tham My Studio - Spa/Beauty Equipment Website
+// Vietnamese field labels in comments
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ==================== USER & AUTH ====================
+
+/// Nguoi dung he thong - System users with role-based access
+model User {
+  id          String   @id @default(cuid())
+  email       String   @unique // Email
+  password    String   // Mat khau (hashed)
+  role        UserRole @default(viewer) // Vai tro: super_admin, admin, sales, viewer
+  full_name   String?  // Ho va ten
+  phone       String?  // So dien thoai
+  avatar_url  String?  // Anh dai dien
+  is_active   Boolean  @default(true) // Trang thai hoat dong
+  last_login  DateTime? // Dang nhap cuoi
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+
+  appointments Appointment[] @relation("StaffAppointments")
+  interactions CustomerInteraction[]
+
+  @@index([email])
+  @@index([role])
+}
+
+enum UserRole {
+  super_admin // Quan tri cao nhat - Full access
+  admin       // Quan tri - Manage all except system settings
+  sales       // Nhan vien ban hang - Customer & order management
+  viewer      // Chi xem - Read-only access
+}
+
+// ==================== CUSTOMER MANAGEMENT ====================
+
+/// Khach hang - Customer profiles
+model Customer {
+  id         String   @id @default(cuid())
+  name       String   // Ten khach hang
+  phone      String   @unique // So dien thoai (primary identifier in VN)
+  email      String?  // Email
+  zalo_id    String?  @unique // Zalo ID for messaging
+  dob        DateTime? // Ngay sinh
+  address    String?  // Dia chi
+  skin_type  String?  // Loai da (oily, dry, combination, sensitive, normal)
+  notes      String?  @db.Text // Ghi chu
+  source     String?  // Nguon khach hang (zalo, website, walk-in, referral)
+  tags       String[] // The nhan (VIP, new, follow-up)
+  is_active  Boolean  @default(true)
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  interactions  CustomerInteraction[]
+  appointments  Appointment[]
+  orders        Order[]
+
+  @@index([phone])
+  @@index([zalo_id])
+  @@index([source])
+  @@index([created_at])
+}
+
+/// Tuong tac khach hang - Customer interaction history
+model CustomerInteraction {
+  id           String    @id @default(cuid())
+  customer_id  String    // ID khach hang
+  customer     Customer  @relation(fields: [customer_id], references: [id], onDelete: Cascade)
+  user_id      String?   // ID nhan vien xu ly
+  user         User?     @relation(fields: [user_id], references: [id])
+  type         String    // Loai tuong tac (call, zalo, visit, follow_up, note)
+  content      String    @db.Text // Noi dung
+  next_follow_up DateTime? // Hen gio nhac nho tiep theo
+  created_at   DateTime  @default(now())
+
+  @@index([customer_id, created_at])
+  @@index([next_follow_up])
+}
+
+// ==================== PRODUCT MANAGEMENT ====================
+
+/// Danh muc san pham - Product categories
+model ProductCategory {
+  id          String    @id @default(cuid())
+  name        String    // Ten danh muc
+  slug        String    @unique // URL slug
+  description String?   // Mo ta
+  image_url   String?   // Anh danh muc
+  sort_order  Int       @default(0) // Thu tu sap xep
+  is_active   Boolean   @default(true)
+  created_at  DateTime  @default(now())
+
+  products Product[]
+
+  @@index([slug])
+}
+
+/// San pham - Products (beauty equipment)
+model Product {
+  id              String         @id @default(cuid())
+  name            String         // Ten san pham
+  slug            String         @unique // URL slug
+  description     String?        @db.Text // Mo ta chi tiet
+  price           Decimal        @db.Decimal(12, 2) // Gia ban
+  compare_price   Decimal?       @db.Decimal(12, 2) // Gia so sanh (goc)
+  warranty_months Int?           // So thang bao hanh
+  category_id     String         // ID danh muc
+  category        ProductCategory @relation(fields: [category_id], references: [id])
+  images          String[]       // Danh sach anh
+  specifications  Json?          // Thong so ky thuat {key: value}
+  stock_quantity  Int            @default(0) // So luong ton kho
+  is_active       Boolean        @default(true) // Trang thai hoat dong
+  is_featured     Boolean        @default(false) // San pham noi bat
+  created_at      DateTime       @default(now())
+  updated_at      DateTime       @updatedAt
+
+  order_items OrderItem[]
+
+  @@index([slug])
+  @@index([category_id])
+  @@index([is_active, is_featured])
+}
+
+// ==================== SERVICE MANAGEMENT ====================
+
+/// Danh muc dich vu - Service categories
+model ServiceCategory {
+  id          String    @id @default(cuid())
+  name        String    // Ten danh muc
+  slug        String    @unique // URL slug
+  description String?   // Mo ta
+  image_url   String?   // Anh danh muc
+  sort_order  Int       @default(0) // Thu tu sap xep
+  is_active   Boolean   @default(true)
+  created_at  DateTime  @default(now())
+
+  services Service[]
+
+  @@index([slug])
+}
+
+/// Dich vu - Services (spa treatments)
+model Service {
+  id              String          @id @default(cuid())
+  name            String          // Ten dich vu
+  slug            String          @unique // URL slug
+  description     String?         @db.Text // Mo ta chi tiet
+  price           Decimal         @db.Decimal(12, 2) // Gia dich vu
+  duration_minutes Int            // Thoi luong (phut)
+  category_id     String          // ID danh muc
+  category        ServiceCategory @relation(fields: [category_id], references: [id])
+  images          String[]        // Danh sach anh
+  is_active       Boolean         @default(true) // Trang thai hoat dong
+  is_featured     Boolean         @default(false) // Dich vu noi bat
+  created_at      DateTime        @default(now())
+  updated_at      DateTime        @updatedAt
+
+  appointments Appointment[]
+
+  @@index([slug])
+  @@index([category_id])
+  @@index([is_active, is_featured])
+}
+
+// ==================== APPOINTMENT & ORDER ====================
+
+/// Lich hen - Appointments
+model Appointment {
+  id           String       @id @default(cuid())
+  customer_id  String       // ID khach hang
+  customer     Customer     @relation(fields: [customer_id], references: [id], onDelete: Cascade)
+  service_id   String       // ID dich vu
+  service      Service      @relation(fields: [service_id], references: [id])
+  staff_id     String?      // ID nhan vien phuc vu
+  staff        User?        @relation("StaffAppointments", fields: [staff_id], references: [id])
+  scheduled_at DateTime     // Thoi gian hen
+  status       AppointmentStatus @default(pending) // Trang thai
+  notes        String?      @db.Text // Ghi chu
+  created_at   DateTime     @default(now())
+  updated_at   DateTime     @updatedAt
+
+  @@index([customer_id, scheduled_at])
+  @@index([staff_id, scheduled_at])
+  @@index([status])
+}
+
+enum AppointmentStatus {
+  pending    // Cho xac nhan
+  confirmed  // Da xac nhan
+  completed  // Da hoan thanh
+  cancelled  // Da huy
+  no_show    // Khach khong den
+}
+
+/// Don hang - Orders
+model Order {
+  id          String      @id @default(cuid())
+  customer_id String      // ID khach hang
+  customer    Customer    @relation(fields: [customer_id], references: [id], onDelete: Cascade)
+  items       OrderItem[] // Chi tiet don hang
+  subtotal    Decimal     @db.Decimal(12, 2) // Tong tien hang
+  discount    Decimal     @db.Decimal(12, 2) @default(0) // Giam gia
+  total       Decimal     @db.Decimal(12, 2) // Tong thanh toan
+  paid        Decimal     @db.Decimal(12, 2) @default(0) // Da thanh toan
+  status      OrderStatus @default(pending) // Trang thai
+  notes       String?     @db.Text // Ghi chu
+  created_at  DateTime    @default(now())
+  updated_at  DateTime    @updatedAt
+
+  @@index([customer_id, created_at])
+  @@index([status])
+}
+
+enum OrderStatus {
+  pending    // Cho xu ly
+  processing // Dang xu ly
+  shipped    // Da giao hang
+  completed  // Hoan thanh
+  cancelled  // Da huy
+  refunded   // Da hoan tien
+}
+
+/// Chi tiet don hang - Order items
+model OrderItem {
+  id         String  @id @default(cuid())
+  order_id   String  // ID don hang
+  order      Order   @relation(fields: [order_id], references: [id], onDelete: Cascade)
+  product_id String  // ID san pham
+  product    Product @relation(fields: [product_id], references: [id])
+  quantity   Int     // So luong
+  unit_price Decimal @db.Decimal(12, 2) // Don gia
+  total      Decimal @db.Decimal(12, 2) // Thanh tien
+
+  @@index([order_id])
+  @@index([product_id])
+}
