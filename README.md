@@ -1,166 +1,160 @@
-# Tham My Studio - Beauty/Spa Website
+# Tham My Studio
 
-A modern, responsive beauty and spa services website built with Next.js 16, TypeScript, and Tailwind CSS.
+Vietnamese beauty/spa equipment and services website with admin CRM dashboard.
 
-## Features
+## Quick Start
 
-- **Public Pages**: Homepage, Products, Services, News, Promotions, Before/After Gallery, Contact, About, Warranty
-- **Admin Dashboard**: Product, Service, Customer, and User management
-- **Responsive Design**: Mobile-first approach with dark mode support
-- **SEO Optimized**: Meta tags, sitemap, robots.txt, Open Graph
-- **Vietnamese Language**: Full Vietnamese content and SEO metadata
+```bash
+# Install
+npm install
+
+# Configure
+cp .env.example .env.local
+# Add Supabase credentials
+
+# Develop
+npm run dev
+# Open http://localhost:3000
+```
 
 ## Tech Stack
 
-- **Framework**: Next.js 16 (App Router)
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS 4
-- **UI Components**: shadcn/ui
-- **Theme**: next-themes (dark mode)
-- **Forms**: react-hook-form + zod
-- **Database**: Supabase (PostgreSQL)
-- **Fonts**: Be Vietnam Pro, Playfair Display
-
-## Getting Started
-
-### Prerequisites
-
-- Node.js 18+
-- npm or yarn or pnpm
-
-### Installation
-
-1. Clone the repository:
-```bash
-git clone <repository-url>
-cd ck
-```
-
-2. Install dependencies:
-```bash
-npm install
-```
-
-3. Create `.env.local` file:
-```env
-# Supabase
-NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
-SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
-
-# Site URL
-NEXT_PUBLIC_SITE_URL=https://thammy.vn
-```
-
-4. Run development server:
-```bash
-npm run dev
-```
-
-5. Open [http://localhost:3000](http://localhost:3000)
-
-## Scripts
-
-| Command | Description |
-|---------|-------------|
-| `npm run dev` | Start development server |
-| `npm run build` | Build for production |
-| `npm run start` | Start production server |
-| `npm run lint` | Run ESLint |
-| `npm run typecheck` | Run TypeScript type checking |
-| `npm run db:seed` | Seed database with sample data |
+| Layer | Technology |
+|-------|------------|
+| Framework | Next.js 16 (App Router) |
+| Language | TypeScript |
+| Styling | Tailwind CSS 4 + Shadcn/UI |
+| Database | Supabase (PostgreSQL) |
+| Deployment | Vercel |
 
 ## Project Structure
 
 ```
 src/
 ├── app/
-│   ├── (public)/           # Public-facing pages
-│   │   ├── page.tsx        # Homepage
-│   │   ├── san-pham/       # Products
-│   │   ├── dich-vu/        # Services
-│   │   ├── tin-tuc/        # News/Blog
-│   │   ├── khuyen-mai/     # Promotions
-│   │   ├── truoc-sau/      # Before/After gallery
-│   │   ├── lien-he/        # Contact
-│   │   ├── ve-chung-toi/   # About
-│   │   └── bao-hanh/       # Warranty
-│   ├── admin/              # Admin dashboard
-│   │   ├── san-pham/       # Product management
-│   │   ├── dich-vu/        # Service management
-│   │   ├── khach-hang/     # Customer management
-│   │   └── nguoi-dung/     # User management
-│   ├── layout.tsx          # Root layout
-│   ├── globals.css         # Global styles
-│   ├── sitemap.ts          # Sitemap generation
-│   └── robots.ts           # Robots.txt
+│   ├── (public)/      # Public pages (12 routes)
+│   └── admin/         # Admin dashboard (10 routes)
 ├── components/
-│   ├── ui/                 # shadcn/ui components
-│   ├── shared/             # Shared components
-│   ├── public/             # Public page components
-│   └── admin/              # Admin components
+│   ├── ui/            # Shadcn components
+│   ├── shared/        # Header, Footer, Zalo
+│   ├── public/        # ProductCard, LeadForm
+│   └── admin/         # Admin forms, tables
 ├── lib/
-│   ├── utils.ts            # Utility functions
-│   └── supabase/           # Supabase client
-├── types/
-│   └── index.ts            # TypeScript types
-└── prisma/
-    └── schema.prisma       # Database schema
+│   ├── supabase/      # DB clients
+│   ├── crm/           # Lead utilities
+│   └── utils.ts       # Helpers
+└── types/             # TypeScript definitions
 ```
 
-## Pages
+## Routes
 
-### Public Pages (22 pages)
-- Homepage
-- Products listing & detail
-- Services listing & detail
-- News/Blog listing & detail
-- Promotions
-- Before/After gallery
-- Contact
-- About Us
-- Warranty
+### Public
 
-### Admin Pages (9 pages)
-- Dashboard
-- Products (list, create, edit)
-- Services (list, create, edit)
-- Customers (list, detail)
-- Users (list)
+| Route | Page |
+|-------|------|
+| `/` | Homepage |
+| `/san-pham` | Products |
+| `/san-pham/[slug]` | Product detail |
+| `/dich-vu` | Services |
+| `/dich-vu/[slug]` | Service detail |
+| `/tin-tuc` | News/Blog |
+| `/khuyen-mai` | Promotions |
+| `/truoc-sau` | Before/After gallery |
+| `/lien-he` | Contact |
+| `/ve-chung-toi` | About |
+| `/bao-hanh` | Warranty |
+
+### Admin
+
+| Route | Page |
+|-------|------|
+| `/admin` | Dashboard |
+| `/admin/san-pham` | Products CRUD |
+| `/admin/dich-vu` | Services CRUD |
+| `/admin/khach-hang` | Customer CRM |
+| `/admin/nguoi-dung` | Users |
+
+## Database Tables
+
+| Table | Purpose |
+|-------|---------|
+| users | Admin accounts |
+| customers | Customer profiles |
+| customer_interactions | CRM history |
+| products | Equipment catalog |
+| product_categories | Product groups |
+| services | Spa services |
+| service_categories | Service groups |
+| appointments | Bookings |
+| orders | Purchases |
+| order_items | Order lines |
 
 ## Environment Variables
 
-| Variable | Description |
-|----------|-------------|
-| `NEXT_PUBLIC_SUPABASE_URL` | Supabase project URL |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase anonymous key |
-| `SUPABASE_SERVICE_ROLE_KEY` | Supabase service role key |
-| `NEXT_PUBLIC_SITE_URL` | Public site URL |
+```env
+# Required
+NEXT_PUBLIC_SUPABASE_URL=your_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_key
+SUPABASE_SERVICE_ROLE_KEY=your_service_key
+
+# Optional
+NEXT_PUBLIC_SITE_URL=https://thammy.vn
+```
+
+## Scripts
+
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Development server |
+| `npm run build` | Production build |
+| `npm run start` | Start production |
+| `npm run lint` | ESLint |
+| `npm run typecheck` | TypeScript check |
+| `npm run db:seed` | Seed sample data |
+
+## Design System
+
+| Token | Value |
+|-------|-------|
+| Primary | #A78B71 (Mocha Brown) |
+| Accent | #B76E79 (Rose Gold) |
+| Heading | Playfair Display |
+| Body | Be Vietnam Pro |
+
+## Features
+
+- Mobile-first responsive design
+- Vietnamese language
+- Zalo chat integration
+- Lead capture forms
+- Admin CRM dashboard
+- Role-based access control
+- SEO optimized
+
+## Documentation
+
+- [Project Overview & PDR](./docs/project-overview-pdr.md)
+- [Codebase Summary](./docs/codebase-summary.md)
+- [Code Standards](./docs/code-standards.md)
+- [System Architecture](./docs/system-architecture.md)
+- [Design Guidelines](./docs/design-guidelines.md)
 
 ## Deployment
 
 ### Vercel (Recommended)
 
 1. Push to GitHub
-2. Import project in Vercel
+2. Import in Vercel
 3. Add environment variables
 4. Deploy
 
-### Manual Build
+### Manual
 
 ```bash
 npm run build
 npm run start
 ```
 
-## Contributing
-
-1. Fork the repository
-2. Create feature branch
-3. Commit changes
-4. Push to branch
-5. Open Pull Request
-
 ## License
 
-Private project - All rights reserved.
+Private - All rights reserved.
