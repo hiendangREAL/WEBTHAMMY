@@ -9,6 +9,7 @@ import { Separator } from '@/components/ui/separator'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { ProductGrid } from '@/components/public/product-grid'
 import { formatPrice } from '@/lib/utils'
+import { sanitizeHtml } from '@/lib/sanitize'
 import {
   ShieldCheck,
   Truck,
@@ -342,7 +343,7 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
               <TabsContent value="description" className="mt-6">
                 <div
                   className="prose prose-sm max-w-none text-muted-foreground"
-                  dangerouslySetInnerHTML={{ __html: product.description || '<p>Dang cap nhat</p>' }}
+                  dangerouslySetInnerHTML={{ __html: sanitizeHtml(product.description || '<p>Dang cap nhat</p>') }}
                 />
               </TabsContent>
 

@@ -6,6 +6,7 @@ import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Separator } from '@/components/ui/separator'
 import { Calendar, User, Clock, ArrowLeft, Share2, Facebook } from 'lucide-react'
+import { sanitizeHtml } from '@/lib/sanitize'
 
 // Placeholder data
 const placeholderPosts = [
@@ -153,7 +154,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             {/* Content */}
             <div
               className="prose prose-sm max-w-none text-muted-foreground prose-headings:text-foreground prose-a:text-primary"
-              dangerouslySetInnerHTML={{ __html: post.content }}
+              dangerouslySetInnerHTML={{ __html: sanitizeHtml(post.content) }}
             />
 
             {/* Share */}

@@ -1,46 +1,57 @@
 # Code Standards
 
-## Project Overview
-Beauty/Spa equipment website built with Next.js 14+, Supabase, Tailwind CSS, and Shadcn/UI.
+## File Naming
+- **kebab-case** for all files (e.g., `product-card.tsx`, `lead-utils.ts`)
+- Descriptive names preferred over short names
+- Files under 200 lines, split if larger
 
-## Tech Stack
-- **Framework**: Next.js 16+ (App Router)
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS + Shadcn/UI
-- **Database**: Supabase (PostgreSQL)
-- **Auth**: Supabase Auth with RBAC
+## TypeScript
+- Strict mode enabled
+- Explicit return types for functions
+- Interface over type for objects
+- Zod for runtime validation
 
-## File Naming Conventions
-- Use kebab-case for file names: `product-card.tsx`, `customer-form.tsx`
-- Page files: `page.tsx`
-- Layout files: `layout.tsx`
-- API routes: `route.ts`
+## React/Next.js
+- Server Components by default
+- Client Components only when needed (useEffect, useState, event handlers)
+- `'use client'` directive at top of client files
+- Props interface defined above component
 
-## Coding Guidelines
+## Styling
+- Tailwind utility classes
+- Shadcn/UI components
+- CSS variables for design tokens
+- Mobile-first responsive design
 
-### TypeScript
-- Use strict mode
-- Define types in `src/types/`
-- Use `interface` for object shapes
-- Use `type` for unions, intersections
+## Code Organization
+```
+src/
+├── app/           # Next.js App Router pages
+├── components/
+│   ├── ui/        # Shadcn components (don't modify)
+│   ├── shared/    # Shared components (header, footer)
+│   ├── public/    # Public page components
+│   └── admin/     # Admin dashboard components
+├── lib/
+│   ├── supabase/  # Supabase clients
+│   ├── crm/       # CRM utilities
+│   └── utils.ts   # General utilities
+├── types/         # TypeScript types
+└── hooks/         # Custom React hooks
+```
 
-### React Components
-- Use Server Components by default
-- Use Client Components only when needed
-- Keep components under 200 lines
-
-### Styling
-- Use Tailwind utility classes
-- Follow design tokens in `globals.css`
-- Use `cn()` for conditional class merging
-
-### Forms
-- Use react-hook-form with Zod validation
-- Use Shadcn Form components
+## Commit Conventions
+```
+feat: add product comparison feature
+fix: resolve image loading issue
+docs: update API documentation
+style: format code with prettier
+refactor: extract utility function
+test: add unit tests for utils
+chore: update dependencies
+```
 
 ## Vietnamese Content
-- All UI labels in Vietnamese
-- Meta descriptions in Vietnamese
-
-## Git Commits
-- Use conventional commits format
+- Use Vietnamese for labels, content, placeholder text
+- ASCII characters only in code (avoid Unicode in strings)
+- Comments in English for code clarity

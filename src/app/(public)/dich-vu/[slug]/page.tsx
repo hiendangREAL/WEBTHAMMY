@@ -9,6 +9,7 @@ import { Separator } from '@/components/ui/separator'
 import { ServiceCard } from '@/components/public/service-card'
 import { ContactForm } from '@/components/shared/contact-form'
 import { formatPrice } from '@/lib/utils'
+import { sanitizeHtml } from '@/lib/sanitize'
 import { Clock, Users, Award, CheckCircle, MessageCircle } from 'lucide-react'
 
 // Placeholder data
@@ -220,7 +221,7 @@ export default async function ServiceDetailPage({ params }: ServiceDetailPagePro
                 <h2 className="font-heading text-lg font-semibold">Mo ta dich vu</h2>
                 <div
                   className="prose prose-sm mt-4 max-w-none text-muted-foreground"
-                  dangerouslySetInnerHTML={{ __html: service.description || '<p>Dang cap nhat</p>' }}
+                  dangerouslySetInnerHTML={{ __html: sanitizeHtml(service.description || '<p>Dang cap nhat</p>') }}
                 />
               </div>
 
