@@ -178,7 +178,7 @@ export default function WarrantyPage() {
                 </Link>
               </Button>
               <Button size="lg" variant="outline" asChild>
-                <a href="tel:1900xxxx">Goi 1900 xxxx</a>
+                <a href="tel:0392666334">Goi 0392.666.634</a>
               </Button>
             </div>
           </div>

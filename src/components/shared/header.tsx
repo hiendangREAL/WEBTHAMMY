@@ -42,11 +42,11 @@ export function Header() {
         {/* Desktop CTA */}
         <div className="hidden items-center gap-3 md:flex">
           <a
-            href="tel:1900xxxx"
+            href="tel:0392666334"
             className="flex items-center gap-1 text-sm text-muted-foreground hover:text-primary"
           >
             <Phone className="h-4 w-4" />
-            <span>1900 xxxx</span>
+            <span>0392.666.634</span>
           </a>
           <Button className="bg-accent hover:bg-accent-dark">
             Đặt lịch hẹn
@@ -87,11 +87,11 @@ export function Header() {
           ))}
           <div className="mt-4 flex flex-col gap-2">
             <a
-              href="tel:1900xxxx"
+              href="tel:0392666334"
               className="flex items-center justify-center gap-2 rounded-md border border-border px-4 py-2 text-sm"
             >
               <Phone className="h-4 w-4" />
-              <span>1900 xxxx</span>
+              <span>0392.666.634</span>
             </a>
             <Button className="w-full bg-accent hover:bg-accent-dark">
               Đặt lịch hẹn

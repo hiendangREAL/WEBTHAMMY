@@ -291,7 +291,7 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
                   </Link>
                 </Button>
                 <Button size="lg" variant="outline" className="flex-1" asChild>
-                  <a href="tel:1900xxxx">
+                  <a href="tel:0392666334">
                     <Phone className="mr-2 h-5 w-5" />
                     Goi ngay
                   </a>
@@ -307,8 +307,8 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
                   </p>
                   <p className="mt-2 text-sm">
                     <strong>Hotline:</strong>{' '}
-                    <a href="tel:1900xxxx" className="text-primary hover:underline">
-                      1900 xxxx
+                    <a href="tel:0392666334" className="text-primary hover:underline">
+                      0392.666.634
                     </a>
                   </p>
                 </CardContent>

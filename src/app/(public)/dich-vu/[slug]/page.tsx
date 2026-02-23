@@ -280,7 +280,7 @@ export default async function ServiceDetailPage({ params }: ServiceDetailPagePro
                       </Link>
                     </Button>
                     <Button variant="outline" className="w-full" asChild>
-                      <a href="tel:1900xxxx">Goi 1900 xxxx</a>
+                      <a href="tel:0392666334">Goi 0392.666.634</a>
                     </Button>
                   </div>
 

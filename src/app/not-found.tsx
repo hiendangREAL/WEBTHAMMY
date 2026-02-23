@@ -38,7 +38,7 @@ export default function NotFound() {
             </Link>
           </Button>
           <Button variant="outline" asChild className="gap-2">
-            <a href="tel:1900xxxx">
+            <a href="tel:0392666334">
               <Phone className="h-4 w-4" />
               Lien he ho tro
             </a>

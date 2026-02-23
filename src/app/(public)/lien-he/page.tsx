@@ -8,7 +8,7 @@ import { MapPin, Phone, Mail, Clock, Facebook, MessageCircle } from 'lucide-reac
 
 export const metadata: Metadata = {
   title: 'Lien he & Tu van mien phi - Tham My Studio',
-  description: 'Lien he voi Tham My Studio de duoc tu van mien phi. Hotline: 1900 xxxx, Zalo, Facebook hoac truc tiep tai 123 Duong ABC, Quan 1, TP.HCM.',
+  description: 'Lien he voi Tham My Studio de duoc tu van mien phi. Hotline: 0392.666.634, Zalo, Facebook hoac truc tiep tai 123 Duong ABC, Quan 1, TP.HCM.',
   keywords: ['lien he', 'tu van mien phi', 'hotline tham my', 'dia chi spa'],
   openGraph: {
     title: 'Lien he & Tu van mien phi - Tham My Studio',
@@ -27,8 +27,8 @@ const contactInfo = [
   {
     icon: Phone,
     title: 'Hotline',
-    content: '1900 xxxx',
-    link: 'tel:1900xxxx',
+    content: '0392.666.634',
+    link: 'tel:0392666334',
     linkText: 'Goi ngay',
   },
   {
@@ -169,9 +169,9 @@ export default function ContactPage() {
                   className="mt-4 bg-background text-primary hover:bg-background/90"
                   asChild
                 >
-                  <a href="tel:1900xxxx">
+                  <a href="tel:0392666334">
                     <Phone className="mr-2 h-4 w-4" />
-                    1900 xxxx
+                    0392.666.634
                   </a>
                 </Button>
               </div>
