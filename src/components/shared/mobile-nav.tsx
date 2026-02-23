@@ -74,11 +74,11 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
           {/* Footer Actions */}
           <div className="border-t border-border p-4">
             <a
-              href="tel:0392666334"
+              href="tel:0329555534"
               className="mb-3 flex items-center justify-center gap-2 rounded-lg border border-border py-3 text-sm font-medium"
             >
               <Phone className="h-4 w-4" />
-              <span>Gọi ngay: 0392.666.634</span>
+              <span>Gọi ngay: 0329.555.534</span>
             </a>
             <Button className="w-full bg-accent py-3 hover:bg-accent-dark">
               Đặt lịch hẹn

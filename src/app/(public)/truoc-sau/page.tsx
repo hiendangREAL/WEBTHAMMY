@@ -136,7 +136,7 @@ export default function BeforeAfterPage() {
                 <Link href="/lien-he">Dat lich tu van</Link>
               </Button>
               <Button size="lg" variant="outline" asChild>
-                <a href="tel:0392666334">Goi 0392.666.634</a>
+                <a href="tel:0329555534">Goi 0329.555.534</a>
               </Button>
             </div>
           </div>

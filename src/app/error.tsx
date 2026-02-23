@@ -60,7 +60,7 @@ export default function Error({ error, reset }: ErrorProps) {
             </Link>
           </Button>
           <Button variant="outline" asChild className="gap-2">
-            <a href="tel:0392666334">
+            <a href="tel:0329555534">
               <Phone className="h-4 w-4" />
               Ho tro
             </a>
